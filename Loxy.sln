@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loxy", "Loxy\Loxy.csproj", "{3BDC7415-0853-4B94-8FCA-2383DC4D45CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{958C5F5D-B989-4D18-B56F-E15EA1F4CCFC}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BDC7415-0853-4B94-8FCA-2383DC4D45CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BDC7415-0853-4B94-8FCA-2383DC4D45CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BDC7415-0853-4B94-8FCA-2383DC4D45CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BDC7415-0853-4B94-8FCA-2383DC4D45CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2A87B05-9056-46A4-895E-8089072AA71F}
+	EndGlobalSection
+EndGlobal

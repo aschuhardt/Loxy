@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>@ViewData["Title"]</title>
+    @if (ViewData.TryGetValue("Stylesheet", out var cssPath))
+    {
+        <link rel="stylesheet" href="@(cssPath as string)"/>
+    }
+</head>
+<body>
+<main role="main">
+    @RenderBody()
+</main>
+@if (ViewData.TryGetValue("Stylesheet", out var scriptPath))
+{
+    <script src="@(scriptPath as string)" async></script>
+}
+</body>
+</html>

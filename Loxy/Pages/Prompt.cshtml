@@ -1,0 +1,11 @@
+﻿@page
+@model PromptModel
+@{
+}
+
+<script type="text/javascript">
+    window.onload = function() {
+        const input = prompt("@Model.Message");
+        window.location = `@Model.ReturnUrl?${input}`;
+    }
+</script>

@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# IL2026: Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
+dotnet_diagnostic.IL2026.severity = suggestion
