@@ -33,7 +33,7 @@ builder.Services
 var app = builder.Build();
 
 app.Urls.Clear();
-app.Urls.Add(new UriBuilder($"http://127.0.0.1:{config.Port}").Uri.ToString());
+app.Urls.Add(new UriBuilder($"http://0.0.0.0:{config.Port}").Uri.ToString());
 
 if (config.ServeFiles)
     app.UseMiddleware<StaticFileMiddleware>();
