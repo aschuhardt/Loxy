@@ -4,6 +4,12 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PublishSingleFile>true</PublishSingleFile>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<Nullable>disable</Nullable>
+		<RepositoryUrl>https://github.com/aschuhardt/Loxy</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/aschuhardt/Loxy</PackageProjectUrl>
+		<AssemblyName>loxy</AssemblyName>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -11,6 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
 		<PackageReference Include="Opal" Version="1.1.1" />
 	</ItemGroup>
 
@@ -27,6 +34,12 @@
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Content\style.css">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>
