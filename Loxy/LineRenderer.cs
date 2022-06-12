@@ -17,13 +17,12 @@ public class LineRenderer
         _config = config;
         _scheme = httpContext.Request.Scheme;
         _requestHost = httpContext.Request.Host.Host;
-        _port = httpContext.Connection.LocalPort;
+        _port = httpContext.Request.Host.Port.GetValueOrDefault(-1);
     }
 
     private static IHtmlContent WrapInDivBlock(IHtmlContent content)
     {
         var builder = new TagBuilder("div");
-        builder.AddCssClass("line");
         return new HtmlContentBuilder(
             new List<object>
             {
@@ -59,7 +58,7 @@ public class LineRenderer
             Host = _requestHost
         };
 
-        if (uri.Host != _config.ParsedUri.Host)
+        if (uri.Host != _config.GetParsedUri().Host)
         {
             var trimmedUri = uri.ToString().Replace($"{Constants.GeminiScheme}://", string.Empty);
             builder.Path = $"{Constants.ExternalRoutePrefix}/{Uri.EscapeDataString(trimmedUri)}";

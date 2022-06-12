@@ -15,6 +15,7 @@ public class ProxyConfiguration
         set
         {
             _remoteUri = value;
+            _parsedUri = null;
             if (!string.IsNullOrWhiteSpace(_remoteUri) && !_remoteUri.StartsWith(GeminiSchemePrefix))
                 _remoteUri = $"{GeminiSchemePrefix}{_remoteUri}";
         }
@@ -42,16 +43,11 @@ public class ProxyConfiguration
 
     public bool ServeFiles => !string.IsNullOrWhiteSpace(ContentRoot);
 
-    public Uri ParsedUri
+    public Uri GetParsedUri()
     {
-        get
-        {
-            if (string.IsNullOrWhiteSpace(RemoteUri))
-                return null;
+        if (_parsedUri == null && !string.IsNullOrWhiteSpace(RemoteUri))
+            _parsedUri = new Uri(RemoteUri);
 
-            if (_parsedUri == null)
-                _parsedUri = new Uri(RemoteUri);
-            return _parsedUri;
-        }
+        return _parsedUri;
     }
 }
