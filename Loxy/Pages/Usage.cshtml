@@ -1,0 +1,41 @@
+﻿@page
+@model UsageModel
+
+<h1>Loxy</h1>
+<sub>L(unar) (Pr)oxy</sub>
+<p>A HTTP proxy frontent for the Gemini protocol</p>
+<h2>Usage</h2>
+<p>Execute the 'loxy' binary to start the service.</p>
+<pre>./loxy --remote=gemini.circumlunar.space</pre>
+<p>Executing the binary without specifying a remote URI argument will result in this page being shown in response to web requests.</p>
+<p>Various command-line arguments can be used to configure the proxy, and are described below.</p>
+<h2>Configuration</h2>
+<p>The following are the typical command-line arguments that you'll use to configure Loxy.</p>
+<p>
+    Note that becuase Loxy is built upon the ASP.NET Core framework, there are many more options for configuration than those shown here.
+    See documentation <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0">here</a> and
+    <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/endpoints?view=aspnetcore-6.0">here</a>.
+</p>
+<h3>Command-line Arguments</h3>
+<ul>
+    <li>
+        <b>-u|--remote</b> <i>Remote URI</i> - The remote Gemini URI to which requests will be proxied.
+        This should correspond to the primary capsule that you want to serve. Omitting this argument will
+        result in this usage page being shown in response to each request.
+        <i>Note that other capsules will be served from the @Constants.ExternalRoutePrefix path.</i>
+    </li>
+    <li>
+        <b>-r|--root</b> <i>Content Root</i> - A path to a filesystem directory from which to serve static content.
+    </li>
+    <li>
+        <b>-s|--stylesheet</b> <i>Stylesheet</i> - A path to a CSS file within <i>Content Root</i> that will be linked
+        on each response page. Only used if <i>Content Root</i> is set.
+    </li>
+    <li>
+        <b>-j|--script</b> <i>Javascript</i> - A path to a Javascript file within <i>Content Root</i> that will be included
+        on each response page. Only used if <i>Content Root</i> is set.
+    </li>
+    <li>
+        <b>-p|--port</b> <i>Port</i> - The network port to listen on. <i>Default is 8080.</i>
+    </li>
+</ul>

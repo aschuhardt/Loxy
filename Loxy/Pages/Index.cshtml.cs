@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Loxy.Configuration;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Opal;
 using Opal.Document.Line;
@@ -35,6 +36,9 @@ public class ProxyPageModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
+        if (string.IsNullOrWhiteSpace(_config.RemoteUri))
+            return RedirectToPage("Usage");
+
         LineRenderer = new LineRenderer(_config, HttpContext);
 
         if (_config.ServeFiles)
