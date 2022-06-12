@@ -3,7 +3,6 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<PublishSingleFile>true</PublishSingleFile>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
 		<Nullable>disable</Nullable>

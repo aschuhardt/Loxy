@@ -1,4 +1,4 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+ARG PROXY_REMOTE_URI
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
@@ -18,5 +18,6 @@ RUN dotnet publish "Loxy.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENV PROXY_REMOTE_URI
-ENTRYPOINT ["dotnet", "Loxy.dll", "--remote=${PROXY_REMOTE_URI}"]
+ARG PROXY_REMOTE_URI
+ENV PROXY_REMOTE_URI=${PROXY_REMOTE_URI}
+CMD ["sh", "-c", "dotnet loxy.dll -p 80 -u $PROXY_REMOTE_URI"]

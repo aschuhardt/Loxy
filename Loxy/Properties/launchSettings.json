@@ -27,6 +27,7 @@
     },
     "Docker": {
       "commandName": "Docker",
+      "commandLineArgs": "-p 80 -u gemini.circumlunar.space",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "publishAllPorts": true
