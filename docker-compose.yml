@@ -1,0 +1,16 @@
+services:
+  loxy:
+    build:
+      context: .
+      dockerfile: ./Loxy/Dockerfile
+      args:
+        PROXY_REMOTE_URI: gemini.circumlunar.space
+        PROXY_CONTENT_ROOT: /app/content
+        PROXY_STYLESHEET: style.css
+        # PROXY_JAVASCRIPT: site.js
+    ports:
+      - 8080:80
+    volumes:
+      - type: bind
+        source: ./Loxy/Content
+        target: /app/content
