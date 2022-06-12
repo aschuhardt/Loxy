@@ -1,13 +1,24 @@
-﻿namespace Loxy;
+﻿namespace Loxy.Configuration;
 
 public class ProxyConfiguration
 {
-    private Uri? _parsedUri;
+    private const string GeminiSchemePrefix = $"{Constants.GeminiScheme}://";
+    private Uri _parsedUri;
+    private string _remoteUri;
 
     /// <summary>
     ///     The gemini URI to proxy requests to
     /// </summary>
-    public string RemoteUri { get; set; }
+    public string RemoteUri
+    {
+        get => _remoteUri;
+        set
+        {
+            _remoteUri = value;
+            if (!string.IsNullOrWhiteSpace(_remoteUri) && !_remoteUri.StartsWith(GeminiSchemePrefix))
+                _remoteUri = $"{GeminiSchemePrefix}{_remoteUri}";
+        }
+    }
 
     /// <summary>
     ///     Path to a custom stylesheet to use
@@ -24,12 +35,20 @@ public class ProxyConfiguration
     /// </summary>
     public string Javascript { get; set; }
 
+    /// <summary>
+    ///     The port to listen to on localhost
+    /// </summary>
+    public int Port { get; set; } = 8080;
+
     public bool ServeFiles => !string.IsNullOrWhiteSpace(ContentRoot);
 
     public Uri ParsedUri
     {
         get
         {
+            if (string.IsNullOrWhiteSpace(RemoteUri))
+                return null;
+
             if (_parsedUri == null)
                 _parsedUri = new Uri(RemoteUri);
             return _parsedUri;
