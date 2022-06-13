@@ -1,1 +1,1 @@
-dotnet publish -c Release --self-contained=false -p:PublishSingleFile=true -r linux-x64 -o /usr/local
+dotnet publish -c Release --self-contained=false -p:PublishSingleFile=true -p:ProduceReferenceAssembly=false -r linux-x64 -o /usr/local/bin
