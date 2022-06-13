@@ -1,5 +1,6 @@
 # Loxy
 *L(unar) (Pr)oxy*
+
 A HTTP proxy frontent for the Gemini protocol
 
 ## Usage
