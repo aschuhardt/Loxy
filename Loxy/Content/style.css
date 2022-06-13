@@ -1,20 +1,12 @@
 ﻿body {
-	background: #9EABB8;
-	color: #171819;
+    background: #9EABB8;
+    color: #171819;
 }
 
-h1 {
-	margin-left: -0.5em;
-}
+h1 { margin-left: -0.5em; }
 
-h2 {
-	margin-left: -0.25em;
-}
+h2 { margin-left: -0.25em; }
 
-.content {
-	margin: 2em;
-}
+.content { margin: 2em; }
 
-li {
-	margin-top: 0.25em;
-}
+li { margin-top: 0.25em; }
