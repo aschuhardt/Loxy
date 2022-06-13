@@ -18,9 +18,9 @@ The following are the typical command-line arguments that you'll use to configur
 Note that becuase Loxy is built upon the ASP.NET Core framework, there are many more options for configuration than those shown here. See documentation here and here.
 
 ### Command-line Arguments
-- `-u|--remote` **Remote URI** - The remote Gemini URI to which requests will be proxied. This should correspond to the primary capsule that you want to serve. Omitting this argument will result in this usage page being shown in response to each request. Note that other capsules will be served from the /lxy/external path.
-- `-r|--root` **Content Root** - A path to a filesystem directory from which to serve static content.
-- `-s|--stylesheet` **Stylesheet** - A path to a CSS file within Content Root that will be linked on each response page. Only used if Content Root is set.
-- `-j|--script` **Javascript** - A path to a Javascript file within Content Root that will be included on each response page. Only used if Content Root is set.
-- `-p|--port` **Port** - The network port to listen on. Default is 8080.
+- `-u|--remote` The remote Gemini URI to which requests will be proxied. This should correspond to the primary capsule that you want to serve. Omitting this argument will result in this usage page being shown in response to each request. Note that other capsules will be served from the /lxy/external path.
+- `-r|--root` A path to a filesystem directory from which to serve static content.
+- `-s|--stylesheet` A path to a CSS file within Content Root that will be linked on each response page. Only used if Content Root is set.
+- `-j|--script` A path to a Javascript file within Content Root that will be included on each response page. Only used if Content Root is set.
+- `-p|--port` The network port to listen on. Default is 8080.
 
