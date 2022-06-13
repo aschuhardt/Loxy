@@ -2,8 +2,9 @@
 
 public static class Constants
 {
-    public const string ExternalRoutePrefix = "/ext";
-    public const string StaticRoutePrefix = "/sta";
+    public const string ReservedRoutePrefix = "/lxy";
+    public const string ExternalRoutePrefix = $"{ReservedRoutePrefix}/external";
+    public const string StaticRoutePrefix = $"{ReservedRoutePrefix}/static";
     public const string GeminiScheme = "gemini";
 
     public static readonly Dictionary<string, string> ConfigurationKeyMap = new()
