@@ -37,7 +37,7 @@ public class ProxyPageModel : PageModel
     public async Task<IActionResult> OnGetAsync()
     {
         if (string.IsNullOrWhiteSpace(_config.RemoteUri))
-            return RedirectToPage("Usage");
+            return RedirectToPage("Loxy");
 
         LineRenderer = new LineRenderer(_config, HttpContext);
 

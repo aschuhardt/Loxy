@@ -10,7 +10,7 @@
   "profiles": {
     "GeminiProxy": {
       "commandName": "Project",
-      "commandLineArgs": "-r Content -s style.css -u gemini.circumlunar.space",
+      "commandLineArgs": "-r Content -s style.css -u gemini.panda-roux.dev",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
