@@ -13,7 +13,7 @@ public class StaticFileMiddleware
         _config = config;
     }
 
-    public async Task InvokeAsync(HttpContext ctx)
+    public Task InvokeAsync(HttpContext ctx)
     {
         if (ctx.Request.Path.StartsWithSegments(Constants.StaticRoutePrefix,
                 StringComparison.InvariantCultureIgnoreCase))
@@ -25,13 +25,12 @@ public class StaticFileMiddleware
             if (!File.Exists(path))
             {
                 ctx.Response.StatusCode = StatusCodes.Status404NotFound;
-                return;
+                return Task.CompletedTask;
             }
 
-            await ctx.Response.SendFileAsync(path);
-            return;
+            return ctx.Response.SendFileAsync(path);
         }
 
-        await _next(ctx);
+        return _next(ctx);
     }
 }
