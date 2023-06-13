@@ -11,13 +11,21 @@ public class LineRenderer
     private readonly int _port;
     private readonly string _requestHost;
     private readonly string _scheme;
+    private readonly bool _hasHttpContext;
 
-    public LineRenderer(ProxyConfiguration config, HttpContext httpContext)
+    public LineRenderer(ProxyConfiguration config, IHttpContextAccessor httpContextAccessor)
     {
         _config = config;
-        _scheme = httpContext.Request.Scheme;
-        _requestHost = httpContext.Request.Host.Host;
-        _port = httpContext.Request.Host.Port.GetValueOrDefault(-1);
+
+        if (httpContextAccessor.HttpContext != null)
+        {
+            _hasHttpContext = true;
+
+            var httpContext = httpContextAccessor.HttpContext;
+            _scheme = httpContext.Request.Scheme;
+            _requestHost = httpContext.Request.Host.Host;
+            _port = httpContext.Request.Host.Port.GetValueOrDefault(-1);
+        }
     }
 
     private static IHtmlContent WrapInDivBlock(IHtmlContent content)
@@ -48,23 +56,33 @@ public class LineRenderer
 
     private string BuildHref(Uri uri)
     {
-        if (uri.Scheme != Constants.GeminiScheme)
-            return uri.ToString(); // leave non-gemini URIs as-is
-
-        var builder = new UriBuilder(uri)
+        try
         {
-            Scheme = _scheme,
-            Port = _port,
-            Host = _requestHost
-        };
+            if (!_hasHttpContext)
+                return "#";
 
-        if (uri.Host != _config.GetParsedUri().Host)
-        {
-            var trimmedUri = uri.ToString().Replace($"{Constants.GeminiScheme}://", string.Empty);
-            builder.Path = $"{Constants.ExternalRoutePrefix}/{Uri.EscapeDataString(trimmedUri)}";
+            if (uri.Scheme != Constants.GeminiScheme)
+                return uri.ToString(); // leave non-gemini URIs as-is
+
+            var builder = new UriBuilder(uri)
+            {
+                Scheme = _scheme,
+                Port = _port,
+                Host = _requestHost
+            };
+
+            if (uri.Host != _config.GetParsedUri().Host)
+            {
+                var trimmedUri = uri.ToString().Replace($"{Constants.GeminiScheme}://", string.Empty);
+                builder.Path = $"{Constants.ExternalRoutePrefix}/{Uri.EscapeDataString(trimmedUri)}";
+            }
+
+            return builder.Uri.ToString();
         }
-
-        return builder.Uri.ToString();
+        catch (Exception)
+        {
+            return "#";
+        }
     }
 
     private IHtmlContent RenderLinkLine(LinkLine line)
