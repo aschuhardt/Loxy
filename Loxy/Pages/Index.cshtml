@@ -3,27 +3,25 @@
 @using Opal.Document.Line
 @model ProxyPageModel
 
-<div class="content">
-    @{
-        var isRenderingList = false;
-    }
-    @foreach (var line in Model.Lines)
+@{
+    var isRenderingList = false;
+}
+@foreach (var line in Model.Lines)
+{
+    if (!isRenderingList && line.LineType == LineType.List)
     {
-        if (!isRenderingList && line.LineType == LineType.List)
-        {
-            @Html.Raw("<ul>")
-            @HtmlString.NewLine
-            isRenderingList = true;
-        }
-
-        if (isRenderingList && line.LineType != LineType.List)
-        {
-            @Html.Raw("</ul>")
-            @HtmlString.NewLine
-            isRenderingList = false;
-        }
-
-        @Model.LineRenderer.RenderLine(line)
+        @Html.Raw("<ul>")
         @HtmlString.NewLine
+        isRenderingList = true;
     }
-</div>
+
+    if (isRenderingList && line.LineType != LineType.List)
+    {
+        @Html.Raw("</ul>")
+        @HtmlString.NewLine
+        isRenderingList = false;
+    }
+
+    @Model.LineRenderer.RenderLine(line)
+    @HtmlString.NewLine
+}
