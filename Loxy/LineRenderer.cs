@@ -8,12 +8,12 @@ namespace Loxy;
 public class LineRenderer
 {
     private readonly ProxyConfiguration _config;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly HttpContext _httpContext;
 
-    public LineRenderer(ProxyConfiguration config, IHttpContextAccessor httpContextAccessor)
+    public LineRenderer(ProxyConfiguration config, HttpContext httpContext)
     {
         _config = config;
-        _httpContextAccessor = httpContextAccessor;
+        _httpContext = httpContext;
     }
 
     private static IHtmlContent WrapInDivBlock(IHtmlContent content)
@@ -46,15 +46,12 @@ public class LineRenderer
     {
         try
         {
-
-            var httpContext = _httpContextAccessor.HttpContext;
-
-            if (httpContext == null)
+            if (_httpContext == null)
                 return "#";
 
-            var scheme = httpContext.Request.Scheme;
-            var requestHost = httpContext.Request.Host.Host;
-            var port = httpContext.Request.Host.Port.GetValueOrDefault(-1);
+            var scheme = _httpContext.Request.Scheme;
+            var requestHost = _httpContext.Request.Host.Host;
+            var port = _httpContext.Request.Host.Port.GetValueOrDefault(-1);
 
             if (uri.Scheme != Constants.GeminiScheme)
                 return uri.ToString(); // leave non-gemini URIs as-is

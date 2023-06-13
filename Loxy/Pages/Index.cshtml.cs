@@ -14,17 +14,15 @@ public class ProxyPageModel : PageModel
     private readonly ILogger<ProxyPageModel> _logger;
     private readonly IOpalClient _opalClient;
 
-    public ProxyPageModel(ILogger<ProxyPageModel> logger, IOpalClient opalClient, ProxyConfiguration config,
-        LineRenderer lineRenderer)
+    public ProxyPageModel(ILogger<ProxyPageModel> logger, IOpalClient opalClient, ProxyConfiguration config)
     {
         _logger = logger;
         _opalClient = opalClient;
         _config = config;
-        LineRenderer = lineRenderer;
     }
 
-    public LineRenderer LineRenderer { get; }
     public IEnumerable<ILine> Lines { get; private set; }
+    public LineRenderer LineRenderer { get; private set; }
 
     private static bool IsExternalUri(PathString path)
     {
@@ -73,6 +71,8 @@ public class ProxyPageModel : PageModel
 
         try
         {
+            LineRenderer = new LineRenderer(_config, HttpContext);
+
             if (Request.Query.Any())
                 uri = $"{uri}{Request.QueryString}";
 

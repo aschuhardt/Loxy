@@ -27,8 +27,6 @@ if (config.ServeFiles)
 
 builder.Services
     .AddSingleton(config)
-    .AddHttpContextAccessor()
-    .AddScoped<LineRenderer>()
     .AddSingleton<IOpalClient>(_ => new OpalClient())
     .AddRouting(options => options.LowercaseUrls = true)
     .AddRazorPages(options => options.Conventions.AddPageRoute("/index", "{*url}"));
