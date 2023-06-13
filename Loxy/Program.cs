@@ -26,6 +26,7 @@ if (config.ServeFiles)
 }
 
 builder.Services
+    .AddHttpContextAccessor()
     .AddSingleton(config)
     .AddSingleton<IOpalClient>(_ => new OpalClient())
     .AddRouting(options => options.LowercaseUrls = true)

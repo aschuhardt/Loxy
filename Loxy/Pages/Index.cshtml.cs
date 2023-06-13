@@ -13,12 +13,14 @@ public class ProxyPageModel : PageModel
     private readonly ProxyConfiguration _config;
     private readonly ILogger<ProxyPageModel> _logger;
     private readonly IOpalClient _opalClient;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ProxyPageModel(ILogger<ProxyPageModel> logger, IOpalClient opalClient, ProxyConfiguration config)
+    public ProxyPageModel(ILogger<ProxyPageModel> logger, IOpalClient opalClient, ProxyConfiguration config, IHttpContextAccessor httpContextAccessor)
     {
         _logger = logger;
         _opalClient = opalClient;
         _config = config;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public IEnumerable<ILine> Lines { get; private set; }
@@ -71,7 +73,7 @@ public class ProxyPageModel : PageModel
 
         try
         {
-            LineRenderer = new LineRenderer(_config, HttpContext);
+            LineRenderer = new LineRenderer(_config, _httpContextAccessor.HttpContext);
 
             if (Request.Query.Any())
                 uri = $"{uri}{Request.QueryString}";
