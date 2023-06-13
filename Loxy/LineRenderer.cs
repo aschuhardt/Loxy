@@ -9,11 +9,18 @@ public class LineRenderer
 {
     private readonly ProxyConfiguration _config;
     private readonly HttpContext _httpContext;
+    private readonly string _scheme;
+    private readonly string _requestHost;
+    private readonly int _port;
 
     public LineRenderer(ProxyConfiguration config, HttpContext httpContext)
     {
         _config = config;
         _httpContext = httpContext;
+
+        _scheme = _httpContext.Request.Scheme;
+        _requestHost = _httpContext.Request.Host.Host;
+        _port = _httpContext.Request.Host.Port.GetValueOrDefault(-1);
     }
 
     private static IHtmlContent WrapInDivBlock(IHtmlContent content)
@@ -49,18 +56,14 @@ public class LineRenderer
             if (_httpContext == null)
                 return "#";
 
-            var scheme = _httpContext.Request.Scheme;
-            var requestHost = _httpContext.Request.Host.Host;
-            var port = _httpContext.Request.Host.Port.GetValueOrDefault(-1);
-
             if (uri.Scheme != Constants.GeminiScheme)
                 return uri.ToString(); // leave non-gemini URIs as-is
 
             var builder = new UriBuilder(uri)
             {
-                Scheme = scheme,
-                Port = port,
-                Host = requestHost
+                Scheme = _scheme,
+                Port = _port,
+                Host = _requestHost
             };
 
             if (uri.Host != _config.GetParsedUri().Host)
