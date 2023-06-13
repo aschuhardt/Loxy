@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Opal;
+using Opal.Response;
 
 namespace Loxy.Extensions;
 
@@ -58,6 +61,36 @@ public static class RazorPageExtensions
                 builder.RenderStartTag(),
                 builder.RenderEndTag()
             });
+        }
+        catch (Exception)
+        {
+            return HtmlString.Empty;
+        }
+    }
+
+    public static IHtmlContent RenderResponseStatsFooter(this RazorPage<dynamic> page)
+    {
+        try
+        {
+            if (!page.ViewData.TryGetValue("GeminiResponse", out var data) ||
+                data is not IGeminiResponse response)
+                return HtmlString.Empty;
+
+            var elapsedSeconds = page.ViewData["ElapsedSeconds"] as double? ?? 0.0;
+
+            var div = new TagBuilder("div");
+            div.AddCssClass("stats-footer");
+
+            var text = response switch
+            {
+                SuccessfulResponse success => $"{(int)success.Status} {success.MimeType} in {elapsedSeconds:F}s | {success.Uri}",
+                ErrorResponse error => $"{error.Uri} | {(int)error.Status} {error.Message}",
+                _ => response.ToString() ?? string.Empty
+            };
+
+            div.InnerHtml.Append(text);
+
+            return div;
         }
         catch (Exception)
         {

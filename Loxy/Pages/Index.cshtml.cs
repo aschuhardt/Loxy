@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics;
+using System.Net;
 using Loxy.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -78,10 +79,16 @@ public class ProxyPageModel : PageModel
             if (string.IsNullOrWhiteSpace(uri))
                 uri = _config.RemoteUri;
 
+            var stopwatch = Stopwatch.StartNew();
             var response = await _opalClient.SendRequestAsync(uri);
 
-            _logger.LogInformation("({IP}) {URI} {Response}", HttpContext.Connection.RemoteIpAddress, uri,
-                response.ToString());
+            var elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
+            ViewData["ElapsedSeconds"] = stopwatch.Elapsed.TotalSeconds;
+            ViewData["ShouldRenderStatsFooter"] = _config.IncludeStatsFooter;
+            ViewData["GeminiResponse"] = response;
+
+            _logger.LogInformation("({IP}) {URI} {Response} {Elapsed}s", HttpContext.Connection.RemoteIpAddress, uri,
+                response.ToString(), elapsedSeconds.ToString("F"));
 
             if (response is ErrorResponse error)
             {

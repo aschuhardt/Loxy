@@ -51,6 +51,11 @@ public class ProxyConfiguration
     /// </summary>
     public bool NoLoxyInfo { get; set; }
 
+    /// <summary>
+    ///     Flag which enables a footer on each page listing some request stats
+    /// </summary>
+    public bool IncludeStatsFooter { get; set; }
+
     public bool ServeFiles => !string.IsNullOrWhiteSpace(ContentRoot);
 
     public bool HasHeadInsertContent => ServeFiles && !string.IsNullOrWhiteSpace(HeadInsert);

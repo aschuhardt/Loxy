@@ -20,6 +20,7 @@ public static class Constants
         { "-p", "Proxy:Port" },
         { "--port", "Proxy:Port" },
         { "--head", "Proxy:HeadInsert" },
-        { "--no-loxy-info", "Proxy:NoLoxyInfo" }
+        { "--no-loxy-info", "Proxy:NoLoxyInfo" },
+        { "--stats", "Proxy:IncludeStatsFooter" }
     };
 }
