@@ -1,17 +1,10 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:19534",
-      "sslPort": 0
-    }
-  },
   "profiles": {
     "GeminiProxy": {
       "commandName": "Project",
-      "commandLineArgs": "-r Content -s style.css -u gemini.panda-roux.dev",
+      "commandLineArgs": "-r Content --head=head.html -u gemini.panda-roux.dev",
       "launchBrowser": true,
+      "launchUrl": "http://localhost:8080",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -31,6 +24,14 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "publishAllPorts": true
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:19534",
+      "sslPort": 0
     }
   }
 }
