@@ -8,24 +8,12 @@ namespace Loxy;
 public class LineRenderer
 {
     private readonly ProxyConfiguration _config;
-    private readonly int _port;
-    private readonly string _requestHost;
-    private readonly string _scheme;
-    private readonly bool _hasHttpContext;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
     public LineRenderer(ProxyConfiguration config, IHttpContextAccessor httpContextAccessor)
     {
         _config = config;
-
-        if (httpContextAccessor.HttpContext != null)
-        {
-            _hasHttpContext = true;
-
-            var httpContext = httpContextAccessor.HttpContext;
-            _scheme = httpContext.Request.Scheme;
-            _requestHost = httpContext.Request.Host.Host;
-            _port = httpContext.Request.Host.Port.GetValueOrDefault(-1);
-        }
+        _httpContextAccessor = httpContextAccessor;
     }
 
     private static IHtmlContent WrapInDivBlock(IHtmlContent content)
@@ -58,17 +46,24 @@ public class LineRenderer
     {
         try
         {
-            if (!_hasHttpContext)
+
+            var httpContext = _httpContextAccessor.HttpContext;
+
+            if (httpContext == null)
                 return "#";
+
+            var scheme = httpContext.Request.Scheme;
+            var requestHost = httpContext.Request.Host.Host;
+            var port = httpContext.Request.Host.Port.GetValueOrDefault(-1);
 
             if (uri.Scheme != Constants.GeminiScheme)
                 return uri.ToString(); // leave non-gemini URIs as-is
 
             var builder = new UriBuilder(uri)
             {
-                Scheme = _scheme,
-                Port = _port,
-                Host = _requestHost
+                Scheme = scheme,
+                Port = port,
+                Host = requestHost
             };
 
             if (uri.Host != _config.GetParsedUri().Host)
