@@ -41,7 +41,19 @@ public class ProxyConfiguration
     /// </summary>
     public int Port { get; set; } = 8080;
 
+    /// <summary>
+    ///     Path to an HTML file to insert into the head section of each page
+    /// </summary>
+    public string HeadInsert { get; set; }
+
+    /// <summary>
+    ///     Flag which disables the /lxy Loxy build information path
+    /// </summary>
+    public bool NoLoxyInfo { get; set; }
+
     public bool ServeFiles => !string.IsNullOrWhiteSpace(ContentRoot);
+
+    public bool HasHeadInsertContent => ServeFiles && !string.IsNullOrWhiteSpace(HeadInsert);
 
     public Uri GetParsedUri()
     {

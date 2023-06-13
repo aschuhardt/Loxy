@@ -12,7 +12,7 @@
 <h2>Configuration</h2>
 <p>The following are the typical command-line arguments that you'll use to configure Loxy.</p>
 <p>
-    Note that becuase Loxy is built upon the ASP.NET Core framework, there are many more options for configuration than those shown here.
+    Note that because Loxy is built upon the ASP.NET Core framework, there are many more options for configuration than those shown here.
     See documentation <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0">here</a> and
     <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/endpoints?view=aspnetcore-6.0">here</a>.
 </p>
@@ -37,5 +37,12 @@
     </li>
     <li>
         <b>-p|--port</b> <i>Port</i> - The network port to listen on. <i>Default is 8080.</i>
+    </li>
+    <li>
+        <b>--head</b> <i>Head</i> - A path to a HTML file within <i>Content Root</i> to insert into the &lt;head&gt; on each 
+        response page. Only used if <i>Content Root</i> is set.
+    </li>
+    <li>
+        <b>--no-loxy-info</b> Prevents this page from being accessed.
     </li>
 </ul>

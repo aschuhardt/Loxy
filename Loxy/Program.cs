@@ -14,7 +14,8 @@ builder.Configuration
     .AddCommandLine(args, Constants.ConfigurationKeyMap);
 
 var config = builder.Configuration
-    .GetSection("Proxy").Get<ProxyConfiguration>();
+    .GetSection("Proxy").Get<ProxyConfiguration>() 
+             ?? throw new Exception("Failed to load configuration!");
 
 if (config.ServeFiles)
 {
@@ -26,7 +27,9 @@ if (config.ServeFiles)
 
 builder.Services
     .AddSingleton(config)
+    .AddHttpContextAccessor()
     .AddSingleton<IOpalClient>(_ => new OpalClient())
+    .AddTransient<LineRenderer>()
     .AddRouting(options => options.LowercaseUrls = true)
     .AddRazorPages(options => options.Conventions.AddPageRoute("/index", "{*url}"));
 
@@ -34,6 +37,9 @@ var app = builder.Build();
 
 app.Urls.Clear();
 app.Urls.Add(new UriBuilder($"http://0.0.0.0:{config.Port}").Uri.ToString());
+
+if (config.NoLoxyInfo)
+    app.UseMiddleware<HideLoxyInfoPageMiddleware>();
 
 if (config.ServeFiles)
     app.UseMiddleware<StaticFileMiddleware>();

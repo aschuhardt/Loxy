@@ -5,11 +5,12 @@
     <meta charset="utf-8"/>
     <title>@ViewData["Title"]</title>
     @(this.RenderStylesheet())
+    @(this.RenderHeadInsert())
 </head>
 <body>
 <main role="main">
     @RenderBody()
 </main>
-@(this.RenderJavascript())
 </body>
+@(this.RenderJavascript())
 </html>

@@ -18,6 +18,8 @@ public static class Constants
         { "-j", "Proxy:Javascript" },
         { "--script", "Proxy:Javascript" },
         { "-p", "Proxy:Port" },
-        { "--port", "Proxy:Port" }
+        { "--port", "Proxy:Port" },
+        { "--head", "Proxy:HeadInsert" },
+        { "--no-loxy-info", "Proxy:NoLoxyInfo" }
     };
 }
