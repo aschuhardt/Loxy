@@ -1,6 +1,7 @@
 using Loxy;
 using Loxy.Configuration;
 using Loxy.Middleware;
+using Microsoft.AspNetCore.HttpOverrides;
 using Opal;
 
 var builder = WebApplication.CreateBuilder(
@@ -14,7 +15,7 @@ builder.Configuration
     .AddCommandLine(args, Constants.ConfigurationKeyMap);
 
 var config = builder.Configuration
-    .GetSection("Proxy").Get<ProxyConfiguration>() 
+                 .GetSection("Proxy").Get<ProxyConfiguration>()
              ?? throw new Exception("Failed to load configuration!");
 
 if (config.ServeFiles)
@@ -27,6 +28,7 @@ if (config.ServeFiles)
 
 builder.Services
     .AddHttpContextAccessor()
+    .AddScoped<LineRenderer>()
     .AddSingleton(config)
     .AddSingleton<IOpalClient>(_ => new OpalClient())
     .AddRouting(options => options.LowercaseUrls = true)
@@ -36,6 +38,8 @@ var app = builder.Build();
 
 app.Urls.Clear();
 app.Urls.Add(new UriBuilder($"http://0.0.0.0:{config.Port}").Uri.ToString());
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.All });
 
 if (config.NoLoxyInfo)
     app.UseMiddleware<HideLoxyInfoPageMiddleware>();

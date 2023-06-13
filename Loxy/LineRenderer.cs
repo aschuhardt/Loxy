@@ -1,5 +1,6 @@
 ﻿using Loxy.Configuration;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Opal.Document.Line;
 
@@ -8,17 +9,14 @@ namespace Loxy;
 public class LineRenderer
 {
     private readonly ProxyConfiguration _config;
-    private readonly string _scheme;
-    private readonly string _requestHost;
-    private readonly int _port;
+    private readonly Uri _requestUri;
 
-    public LineRenderer(ProxyConfiguration config, HttpContext httpContext)
+    public LineRenderer(ProxyConfiguration config, IHttpContextAccessor httpContextAccessor)
     {
         _config = config;
 
-        _scheme = httpContext.Request.Scheme;
-        _requestHost = httpContext.Request.Host.Host;
-        _port = httpContext.Request.Host.Port.GetValueOrDefault(-1);
+        if (httpContextAccessor.HttpContext != null)
+            _requestUri = new Uri(httpContextAccessor.HttpContext.Request.GetEncodedUrl());
     }
 
     private static IHtmlContent WrapInDivBlock(IHtmlContent content)
@@ -54,18 +52,15 @@ public class LineRenderer
             if (uri.Scheme != Constants.GeminiScheme)
                 return uri.ToString(); // leave non-gemini URIs as-is
 
-            var builder = new UriBuilder(uri)
-            {
-                Scheme = _scheme,
-                Port = _port,
-                Host = _requestHost
-            };
+            var builder = new UriBuilder(_requestUri);
 
             if (uri.Host != _config.GetParsedUri().Host)
             {
                 var trimmedUri = uri.ToString().Replace($"{Constants.GeminiScheme}://", string.Empty);
                 builder.Path = $"{Constants.ExternalRoutePrefix}/{Uri.EscapeDataString(trimmedUri)}";
             }
+            else
+                builder.Path = uri.PathAndQuery;
 
             return builder.Uri.ToString();
         }
