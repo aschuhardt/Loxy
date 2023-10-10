@@ -1,7 +1,14 @@
 # Loxy
 *L(unar) (Pr)oxy*
 
-A HTTP proxy frontent for the Gemini protocol
+A HTTP proxy frontent for the gemini protocol.
+
+- Loxy serves a website that proxies incoming requests to a preconfigured gemini capsule
+- Gemtext is transformed into HTML 
+- Links to external capsules are translated into links that will proxy requests to those capsules
+  - For example:
+    - If Loxy is passed `-u geminiprotocol.net` then it will proxy requests to `gemini://geminiprotocol.net` by default
+    - A link that points to `gemini://geminispace.info` will be translated to `/lxy/external/geminispace.info` and from that route Loxy will continue to proxy requests to the external capsule
 
 ## Usage
 Execute the 'loxy' binary to start the service.
