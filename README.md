@@ -40,6 +40,6 @@ Note that becuase Loxy is built upon the ASP.NET Core framework, there are many 
 - `-j|--script` A path to a Javascript file within Content Root that will be included on each response page. Only used if Content Root is set.
 - `--head` A path to an HTML file to insert into each page's `head` element.  Only used if Content Root is set.
 - `--no-loxy-info` Disables the usage information page (`/lxy/overview`).
-- `--stats` Include extra information about the proxied request at the bottom of each page.  This is useful for troubleshooting
+- `--stats` Prints the response status, round-trip time, and request URL at the bottom of each page.
 - `-p|--port` The network port to listen on. Default is 8080.
 
