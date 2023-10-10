@@ -6,12 +6,17 @@ A HTTP proxy frontent for the gemini protocol.
 ## Overview
 Loxy serves a website that proxies incoming requests to a preconfigured gemini capsule.  Gemtext is transformed into HTML.
 
-Links to external capsules are translated into links that will proxy requests to those capsules.  For example:
-  - If Loxy is passed `-u geminiprotocol.net` then
-    - Loxy will proxy incoming requests to `gemini://geminiprotocol.net` by default
-    - A link that points to `gemini://geminispace.info` will be translated to `/lxy/external/geminispace.info`, and from that route Loxy will proxy requests to the external capsule
 
 Loxy supports injecting CSS stylesheets, JavaScript, and `<head>` contents.  By setting a content root directory, static files may be served.
+
+### Links
+Links to external capsules are transformed into Loxy links.  For example:
+
+If Loxy is passed `-u geminiprotocol.net` then
+  - Loxy will proxy incoming requests to `gemini://geminiprotocol.net` by default
+  - A link that points to `gemini://geminispace.info` will be translated to `/lxy/external/geminispace.info`, and from that route Loxy will proxy requests to the external capsule.
+
+If Loxy is served from behind a reverse proxy such as NGINX or HAProxy, then external proxying can be disabled by restricting access to the `/lxy/external` route prefix.  This can be helpful for preventing abuse of the proxy by bad actors.
 
 ## Usage
 Execute the 'loxy' binary to start the service.
