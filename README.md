@@ -16,12 +16,15 @@ Modify the build arguments in `docker-compose.yml`, and run `docker compose up -
 
 ## Configuration
 The following are the typical command-line arguments that you'll use to configure Loxy.
-Note that becuase Loxy is built upon the ASP.NET Core framework, there are many more options for configuration than those shown here. See documentation here and here.
+Note that becuase Loxy is built upon the ASP.NET Core framework, there are many more options for configuration than those shown here. See documentation [here].
 
 ### Command-line Arguments
 - `-u|--remote` The remote Gemini URI to which requests will be proxied. This should correspond to the primary capsule that you want to serve. Omitting this argument will result in this usage page being shown in response to each request. Note that other capsules will be served from the /lxy/external path.
 - `-r|--root` A path to a filesystem directory from which to serve static content.
 - `-s|--stylesheet` A path to a CSS file within Content Root that will be linked on each response page. Only used if Content Root is set.
 - `-j|--script` A path to a Javascript file within Content Root that will be included on each response page. Only used if Content Root is set.
+- `--head` A path to an HTML file to insert into each page's `head` element.  Only used if Content Root is set.
+- `--no-loxy-info` Disables the usage information page (`/lxy/overview`).
+- `--stats` Include extra information about the proxied request at the bottom of each page.  This is useful for troubleshooting
 - `-p|--port` The network port to listen on. Default is 8080.
 
