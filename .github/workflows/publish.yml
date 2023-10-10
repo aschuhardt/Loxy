@@ -16,12 +16,12 @@ jobs:
       run: dotnet restore
     - name: Publish ${{ matrix.platform }}
       run: |
-        mkdir -p ./publish/${{ matrix.platform }} && \
-        dotnet publish ./Loxy/Loxy.csproj -o ./publish/${{ matrix.platform }} \
+        mkdir -p ./publish && \
+        dotnet publish ./Loxy/Loxy.csproj -o ./publish \
         -c Release -r ${{ matrix.platform }} \
         --self-contained true -p:PublishTrimmed=true -p:PublishSingleFile=true
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.3
       with:
-        name: ${{ matrix.platform}}-$(date +%s)
+        name: ${{ matrix.platform}}-${{ github.run_id }}
         path: ./publish/${{ matrix.platform }}
