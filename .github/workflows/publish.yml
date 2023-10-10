@@ -14,7 +14,7 @@ jobs:
     - name: Publish ${{ matrix.platform }}
       run: |
         mkdir -p ./publish/${{ matrix.platform }} && \
-        dotnet publish -o ./publish/${{ matrix.platform }} \
+        dotnet publish ./Loxy/Loxy.csproj -o ./publish/${{ matrix.platform }} \
         -c Release -r ${{ matrix.platform }} \
         --self-contained true -p:PublishTrimmed=true -p:PublishSingleFile=true
     - name: Upload a Build Artifact
